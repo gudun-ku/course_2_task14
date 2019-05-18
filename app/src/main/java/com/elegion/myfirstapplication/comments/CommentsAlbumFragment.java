@@ -12,23 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.elegion.myfirstapplication.ApiUtils;
-import com.elegion.myfirstapplication.App;
 import com.elegion.myfirstapplication.R;
-import com.elegion.myfirstapplication.db.AlbumSong;
-import com.elegion.myfirstapplication.db.MusicDao;
 import com.elegion.myfirstapplication.model.Album;
 import com.elegion.myfirstapplication.model.Comment;
-import com.elegion.myfirstapplication.model.Song;
 
-import java.util.Collections;
-import java.util.Comparator;
+
 import java.util.List;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
+
 import io.reactivex.schedulers.Schedulers;
 
 
