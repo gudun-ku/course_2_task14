@@ -8,18 +8,21 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.elegion.myfirstapplication.ApiUtils;
 import com.elegion.myfirstapplication.App;
 import com.elegion.myfirstapplication.R;
+import com.elegion.myfirstapplication.comments.CommentsAlbumFragment;
 import com.elegion.myfirstapplication.db.AlbumSong;
 import com.elegion.myfirstapplication.db.MusicDao;
 import com.elegion.myfirstapplication.model.Album;
 import com.elegion.myfirstapplication.model.Song;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -52,6 +55,12 @@ public class DetailAlbumFragment extends Fragment implements SwipeRefreshLayout.
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -196,5 +205,33 @@ public class DetailAlbumFragment extends Fragment implements SwipeRefreshLayout.
         public int compare(Song left, Song right) {
             return left.getId() - right.getId();
         }
+    }
+
+    // Menu item for comments
+
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_album_comments, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle item selection
+        switch (item.getItemId()) {
+            case R.id.actionComments:
+                gotoCommentsFragment(mAlbum);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void gotoCommentsFragment(Album album) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, CommentsAlbumFragment.newInstance(album))
+                .addToBackStack(CommentsAlbumFragment.class.getName())
+                .commit();
     }
 }

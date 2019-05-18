@@ -27,5 +27,8 @@
     <string name="retyped_password_validation_error">Пароли должны совпадать!</string>
     <string name="username_validation_error">Имя не должно быть пустым!</string>
     <string name="msg_no_internet">Выключено соединение с сетью</string>
+    <string name="postcomment">Отправить</string>
+    <string name="newcomment">Ваш комментарий</string>
+    <string name="showcomments">Комментарии</string>
 
 </resources>
