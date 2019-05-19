@@ -8,6 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity(foreignKeys = {
         @ForeignKey(entity = Album.class, parentColumns = "id", childColumns = "album_id")})
@@ -33,6 +34,12 @@ public class Comment implements Serializable {
     @ColumnInfo(name = "timestamp")
     @SerializedName("timestamp")
     private String mTimestamp;
+
+    public Comment(int albumId, String text, String author) {
+        this.albumId = albumId;
+        this.mText = text;
+        this.mAuthor = author;
+    }
 
     public int getId() {
         return mId;

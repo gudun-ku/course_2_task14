@@ -5,7 +5,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.elegion.myfirstapplication.R;
+import com.elegion.myfirstapplication.Utils;
 import com.elegion.myfirstapplication.model.Comment;
+
 
 public class CommentsHolder extends RecyclerView.ViewHolder {
 
@@ -23,6 +25,8 @@ public class CommentsHolder extends RecyclerView.ViewHolder {
     public void bind(Comment item) {
         mAuthor.setText(item.getAuthor());
         mText.setText(item.getText());
-        mDateTime.setText(item.getTimestamp());
+        mDateTime.setText(Utils.getFormattedDate(item.getTimestamp()));
     }
+
+
 }

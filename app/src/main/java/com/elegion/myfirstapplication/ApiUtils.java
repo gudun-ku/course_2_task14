@@ -15,6 +15,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import okhttp3.Authenticator;
 import okhttp3.Credentials;
@@ -39,6 +40,7 @@ public class ApiUtils {
             UnknownHostException.class,
             SocketTimeoutException.class,
             ConnectException.class
+
     );
 
     private static OkHttpClient client;
@@ -65,7 +67,9 @@ public class ApiUtils {
                 builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
             }
 
+
             client = builder.build();
+
         }
         return client;
     }

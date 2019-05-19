@@ -65,6 +65,9 @@ public class AuthFragment extends Fragment {
                             public void accept(User user) throws Exception {
                                 if (user != null && user instanceof User) {
                                     showMessage("Hi again, " + user.getName() + "!");
+                                    //current user
+                                    ((App) getActivity().getApplication()).setLoggedInUser(user);
+
                                 } else {
                                     showMessage(R.string.msg_no_internet);
                                 }
@@ -195,6 +198,8 @@ public class AuthFragment extends Fragment {
                 mSharedPreferencesHelper.getSuccessEmails()
         );
         mEmail.setAdapter(mEmailedUsersAdapter);
+
+
 
         return v;
     }

@@ -23,6 +23,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:textAlignment="textEnd"
             android:textColor="@color/colorAccent"
             android:textStyle="bold" />
     </LinearLayout>

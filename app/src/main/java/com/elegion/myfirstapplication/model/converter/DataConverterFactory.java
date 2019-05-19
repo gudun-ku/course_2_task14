@@ -1,5 +1,6 @@
 package com.elegion.myfirstapplication.model.converter;
 
+import com.elegion.myfirstapplication.APIDataEnvelope;
 import com.elegion.myfirstapplication.model.Data;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,6 +17,10 @@ public class DataConverterFactory extends Converter.Factory {
     @Nullable
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+
+        if(!canHandle(annotations))
+            return null;
+
         Type envelopedType = TypeToken.getParameterized(Data.class, type).getType();
 
         final Converter<ResponseBody, Data> delegate = retrofit.nextResponseBodyConverter(this,envelopedType,annotations);
@@ -28,4 +33,16 @@ public class DataConverterFactory extends Converter.Factory {
             }
         };
     }
+
+    private boolean canHandle(Annotation[] annotations) {
+        for (Annotation annotation : annotations) {
+
+            if (APIDataEnvelope.class == annotation.annotationType()) {
+                return ((APIDataEnvelope) annotation).hasEnvelope();
+            }
+        }
+        return true;
+    }
+
+
 }

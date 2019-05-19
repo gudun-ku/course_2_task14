@@ -30,5 +30,6 @@
     <string name="postcomment">Отправить</string>
     <string name="newcomment">Ваш комментарий</string>
     <string name="showcomments">Комментарии</string>
+    <string name="no_comment_text">Нет текста для отправки</string>
 
 </resources>

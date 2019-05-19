@@ -12,6 +12,7 @@ import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -44,12 +45,17 @@ public interface AcademyApi {
     @GET("comments")
     Single<List<Comment>> getComments();
 
+    // comment (by id)
+    @GET("comments/{id}")
+    Single<Comment> getComment(@Path("id") int commentId);
+
     // comments to albums
     @GET("albums/{id}/comments")
     Single<List<Comment>> getAlbumComments(@Path("id") int albumId);
 
+    @APIDataEnvelope(hasEnvelope = false)
     @POST("comments")
     // post a comment
-    Completable postComment(@Body Comment comment);
+    Single<Comment> postComment(@Body Comment comment);
 
 }

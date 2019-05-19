@@ -42,5 +42,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsHolder> {
         mComments.addAll(data);
         notifyDataSetChanged();
     }
+
+    public void addComment(Comment comment) {
+        mComments.add(comment);
+        notifyDataSetChanged();
+    }
 }
 
