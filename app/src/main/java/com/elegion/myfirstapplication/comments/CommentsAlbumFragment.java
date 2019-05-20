@@ -46,6 +46,8 @@ public class CommentsAlbumFragment extends Fragment
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mRefresher;
     private View mErrorView;
+    private View mDataView;
+    private View mNoDataView;
     private Album mAlbum;
     private EditText mPostEdit;
     private Button mPostButton;
@@ -82,13 +84,20 @@ public class CommentsAlbumFragment extends Fragment
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         mRecyclerView = view.findViewById(R.id.recycler);
-        mRefresher = view.findViewById(R.id.refresher);
-        mRefresher.setOnRefreshListener(this);
         mErrorView = view.findViewById(R.id.errorView);
+
         mPostEdit = view.findViewById(R.id.etComment);
         mPostButton = view.findViewById(R.id.buttonPost);
         mPostButton.setOnClickListener(this);
+
+        mNoDataView = view.findViewById(R.id.no_data);
+        mDataView = view.findViewById(R.id.comments_data);
+
+        mRefresher = view.findViewById(R.id.refresher);
+        mRefresher.setOnRefreshListener(this);
+
 
         //current user
         loggedInUser = ((App) getActivity().getApplication()).getLoggedUser();
@@ -163,9 +172,8 @@ public class CommentsAlbumFragment extends Fragment
                 .subscribe(new Consumer<List<Comment>>() {
                                @Override
                                public void accept(List<Comment> comments) throws Exception {
-                                   mErrorView.setVisibility(View.GONE);
-                                   mRecyclerView.setVisibility(View.VISIBLE);
-                                   mCommmentsAdapter.addData(comments, true);
+
+                                   addCommentsData(comments, true);
                                }
                            },
                         new Consumer<Throwable>() {
@@ -179,6 +187,28 @@ public class CommentsAlbumFragment extends Fragment
         );
 
 
+    }
+
+    private void addCommentsData(List<Comment> comments, boolean isRefreshed) {
+        if (comments.isEmpty()) {
+            mErrorView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.GONE);
+            mDataView.setVisibility(View.GONE);
+            mNoDataView.setVisibility(View.VISIBLE);
+
+        } else {
+            mErrorView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mDataView.setVisibility(View.VISIBLE);
+            mNoDataView.setVisibility(View.GONE);
+        }
+
+        boolean commentsAdded = mCommmentsAdapter.addData(comments, true);
+        if (commentsAdded) {
+            showToast("Комментарии обновлены");
+        } else {
+            showToast("Новых комментариев нет");
+        }
     }
 
     private void getAlbumComment(int commentId) {
@@ -218,7 +248,6 @@ public class CommentsAlbumFragment extends Fragment
                         }
                 )
         );
-
 
     }
 

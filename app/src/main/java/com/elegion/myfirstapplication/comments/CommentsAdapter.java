@@ -34,13 +34,17 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsHolder> {
         return mComments.size();
     }
 
-    public void addData(List<Comment> data, boolean isRefreshed) {
+    public boolean addData(List<Comment> data, boolean isRefreshed) {
+
+        boolean isCommentsAdded = (data.size() > mComments.size());
+
         if (isRefreshed) {
             mComments.clear();
         }
 
         mComments.addAll(data);
         notifyDataSetChanged();
+        return isCommentsAdded;
     }
 
     public void addComment(Comment comment) {
